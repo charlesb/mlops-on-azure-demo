@@ -20,6 +20,8 @@ parameters:
   type: string
 - name: filesystem
   type: string
+- name: subscriptionid
+  type: string
 
 jobs:
 
@@ -73,7 +75,7 @@ jobs:
         resourceGroup: ${{parameters.resourceGroup}}
         amlWorkspace: ${{parameters.amlWorkspace}}
         scriptPath: src/register_adlsgen2_as_datastore.py
-        scriptArguments: --datastorename ${{parameters.datastoreName}} --accountname ${{parameters.accountName}} --filesystem ${{parameters.filesystem}}
+        scriptArguments: --datastorename ${{parameters.datastoreName}} --accountname ${{parameters.accountName}} --filesystem ${{parameters.filesystem}} --subscriptionid ${{parameters.subscriptionId}}
         scriptExtraDependencies: azureml-opendatasets==$(SDK_VERSION) joblib
         displayName: 'Create Datastore' 
 
