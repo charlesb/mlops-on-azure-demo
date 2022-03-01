@@ -123,12 +123,12 @@ stages:
       filesystem: $(EXTERNALFILESYSTEM)
       datastoreName: $(EXTERNALDATASTORENAME)
 
-# Resgister External Datastore PROD Environment
-- stage: datastore_register_dev
-  displayName: 'Datastore Registration DEV Environment'
-  dependsOn: deployinfra_dev
+# Resgister External Datastore PRD Environment
+- stage: datastore_register_prd
+  displayName: 'Datastore Registration PRD Environment'
+  dependsOn: deployinfra_prd
   variables:
-  - template: ../configuration/configuration-infra-DEV.variables.yml
+  - template: ../configuration/configuration-infra-PRD.variables.yml
   jobs:
   - template: templates/register-external-datastore.template.yml
     parameters:
