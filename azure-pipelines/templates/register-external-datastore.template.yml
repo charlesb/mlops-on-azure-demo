@@ -25,7 +25,7 @@ jobs:
 
 - job: register_datastore
   displayName: 'Register External ADLSGen2 Datastore'
-
+  steps:
     - template: utils/run-aml-python-code.template.yml
       parameters:
         serviceConnection: ${{parameters.serviceConnection}}
