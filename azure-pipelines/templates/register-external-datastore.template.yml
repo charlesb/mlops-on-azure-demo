@@ -18,7 +18,7 @@ parameters:
   type: string
 - name: accountName
   type: string
--name: filesystem
+- name: filesystem
   type: string
 
 jobs:
