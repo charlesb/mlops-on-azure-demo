@@ -123,6 +123,7 @@ stages:
       filesystem: $(EXTERNALFILESYSTEM)
       datastoreName: $(EXTERNALDATASTORENAME)
       subscriptionId: $(EXTERNALSTORAGEACCOUNTSUBSCRIPTIONID)
+      extSaResourceGroup: $(EXTERNALSTORAGEACCOUNTRG)
 
 # Resgister External Datastore PRD Environment
 - stage: datastore_register_prd
@@ -140,6 +141,7 @@ stages:
       filesystem: $(EXTERNALFILESYSTEM)
       datastoreName: $(EXTERNALDATASTORENAME)
       subscriptionId: $(EXTERNALSTORAGEACCOUNTSUBSCRIPTIONID)
+      extSaResourceGroup: $(EXTERNALSTORAGEACCOUNTRG)
 
 ########################
 ##  DATA PREPARATION  ##
