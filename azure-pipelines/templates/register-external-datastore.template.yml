@@ -32,7 +32,7 @@ jobs:
         resourceGroup: ${{parameters.resourceGroup}}
         amlWorkspace: ${{parameters.amlWorkspace}}
         scriptPath: src/register_adlsgen2_as_datastore.py
-        scriptArguments: --datastore-name ${{parameters.datastoreName}} --account-name ${{parameters.accountName}} --filesystem ${{parameters.filesystem}}
+        scriptArguments: --datastorename ${{parameters.datastoreName}} --accountname ${{parameters.accountName}} --filesystem ${{parameters.filesystem}}
         scriptExtraDependencies: azureml-opendatasets==$(SDK_VERSION) joblib
         displayName: 'Create Datastore' 
 
