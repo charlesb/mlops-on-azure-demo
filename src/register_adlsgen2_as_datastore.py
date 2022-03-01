@@ -13,7 +13,8 @@ def main(datastore_name, account_name, filesystem):
         workspace=ws,
         datastore_name=datastore_name,
         account_name=account_name,
-        filesystem=filesystem
+        filesystem=filesystem,
+        grant_workspace_access=True
     ) 
 
     print(f'Datastore {adlsgen2_datastore} created with storage account {account_name}/{filesystem}')
