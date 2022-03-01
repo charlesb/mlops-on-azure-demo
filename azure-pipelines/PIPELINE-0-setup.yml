@@ -103,34 +103,70 @@ stages:
       resourceGroup: $(RESOURCE_GROUP)
       amlWorkspace: $(AMLWORKSPACE)
 
+####################################
+##  RESGISTER EXTERNAL DATASTORE  ##
+####################################
+
+# Resgister External Datastore DEV Environment
+- stage: datastore_register_dev
+  displayName: 'Datastore Registration DEV Environment'
+  dependsOn: deployinfra_dev
+  variables:
+  - template: ../configuration/configuration-infra-DEV.variables.yml
+  jobs:
+  - template: templates/register-external-datastore.template.yml
+    parameters:
+      serviceConnection: $(SERVICECONNECTION_RG)
+      resourceGroup: $(RESOURCE_GROUP)
+      amlWorkspace: $(AMLWORKSPACE)
+      accountName: $(EXTERNALSTORAGEACCOUNT)
+      filesystem: $(EXTERNALFILESYSTEM)
+      datastoreName: $(EXTERNALDATASTORENAME)
+
+# Resgister External Datastore PROD Environment
+- stage: datastore_register_dev
+  displayName: 'Datastore Registration DEV Environment'
+  dependsOn: deployinfra_dev
+  variables:
+  - template: ../configuration/configuration-infra-DEV.variables.yml
+  jobs:
+  - template: templates/register-external-datastore.template.yml
+    parameters:
+      serviceConnection: $(SERVICECONNECTION_RG)
+      resourceGroup: $(RESOURCE_GROUP)
+      amlWorkspace: $(AMLWORKSPACE)
+      accountName: $(EXTERNALSTORAGEACCOUNT)
+      filesystem: $(EXTERNALFILESYSTEM)
+      datastoreName: $(EXTERNALDATASTORENAME)
 
 ########################
 ##  DATA PREPARATION  ##
 ########################
 
-# Data Prep DEV Environment
-- stage: dataprep_dev
-  displayName: 'Data Preparation DEV Environment'
-  dependsOn: deployinfra_dev
-  variables:
-  - template: ../configuration/configuration-infra-DEV.variables.yml
-  jobs:
-  - template: templates/update-data.template.yml
-    parameters:
-      serviceConnection: $(SERVICECONNECTION_RG)
-      resourceGroup: $(RESOURCE_GROUP)
-      amlWorkspace: $(AMLWORKSPACE)
+# # Data Prep DEV Environment
+# - stage: dataprep_dev
+#   displayName: 'Data Preparation DEV Environment'
+#   dependsOn: deployinfra_dev
+#   variables:
+#   - template: ../configuration/configuration-infra-DEV.variables.yml
+#   jobs:
+#   - template: templates/update-data.template.yml
+#     parameters:
+#       serviceConnection: $(SERVICECONNECTION_RG)
+#       resourceGroup: $(RESOURCE_GROUP)
+#       amlWorkspace: $(AMLWORKSPACE)
+#       storageAccount: $(STORAGEACCOUNT)
 
-# Data Prep PRD Environment
-- stage: dataprep_prd
-  displayName: 'Data Preparation PRD Environment'
-  dependsOn: deployinfra_prd
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
-  variables:
-  - template: ../configuration/configuration-infra-PRD.variables.yml
-  jobs:
-  - template: templates/update-data.template.yml
-    parameters:
-      serviceConnection: $(SERVICECONNECTION_RG)
-      resourceGroup: $(RESOURCE_GROUP)
-      amlWorkspace: $(AMLWORKSPACE)
+# # Data Prep PRD Environment
+# - stage: dataprep_prd
+#   displayName: 'Data Preparation PRD Environment'
+#   dependsOn: deployinfra_prd
+#   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+#   variables:
+#   - template: ../configuration/configuration-infra-PRD.variables.yml
+#   jobs:
+#   - template: templates/update-data.template.yml
+#     parameters:
+#       serviceConnection: $(SERVICECONNECTION_RG)
+#       resourceGroup: $(RESOURCE_GROUP)
+#       amlWorkspace: $(AMLWORKSPACE)

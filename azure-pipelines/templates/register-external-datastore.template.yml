@@ -1,0 +1,52 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+# Azure Pipeline Template for updating dataset before retraining
+# The dataset in this example is updated for illustration purposes only, the data downloaded is the same
+
+parameters:
+- name: serviceConnection
+  type: string
+- name: resourceGroup
+  type: string
+- name: amlWorkspace
+  type: string
+- name: dataPath
+  type: string
+  default: $(AML_DATASET)
+- name: datastoreName
+  type: string
+- name: accountName
+  type: string
+-name: filesystem
+  type: string
+
+jobs:
+
+- job: register_datastore
+  displayName: 'Register External ADLSGen2 Datastore'
+
+    - template: utils/run-aml-python-code.template.yml
+      parameters:
+        serviceConnection: ${{parameters.serviceConnection}}
+        resourceGroup: ${{parameters.resourceGroup}}
+        amlWorkspace: ${{parameters.amlWorkspace}}
+        scriptPath: src/register_adlsgen2_as_datastore.py
+        scriptArguments: --datastore-name ${{parameters.datastoreName}} --account-name ${{parameters.accountName}} --filesystem ${{parameters.filesystem}}
+        displayName: 'Create Datastore' 
+
+# - job: register_dataset
+#   displayName: 'Register Dataset'
+#   dependsOn: register_datastore
+#   variables: 
+#     datastore: $[ dependencies.data_snapshot.outputs['datavars.datastore'] ]
+#     datapath: $[ dependencies.data_snapshot.outputs['datavars.datapath'] ]
+#   steps:
+
+#   - template: utils/run-aml-python-code.template.yml
+#     parameters:
+#       serviceConnection: ${{parameters.serviceConnection}}
+#       resourceGroup: ${{parameters.resourceGroup}}
+#       amlWorkspace: ${{parameters.amlWorkspace}}
+#       scriptPath: operation/execution/register_dataset.py
+#       scriptArguments: --name $(AML_DATASET) --datastore $(DATASTORE) --path $(DATAPATH)
