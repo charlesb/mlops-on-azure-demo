@@ -32,6 +32,7 @@ if __name__ == "__main__":
     args = parse_args()
 
     main(
-        datastore=args.datastore,
-        data_path=args.path
+        datastore_name=args.datastore-name,
+        account_name=args.account-name,
+        filesystem=args.filesystem
     )
