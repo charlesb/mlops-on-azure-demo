@@ -24,6 +24,8 @@ parameters:
   type: string
 - name: extsaresourcegroup
   type: string
+- name: datasetDataPath
+  type: string
 
 jobs:
 
@@ -81,18 +83,18 @@ jobs:
         scriptExtraDependencies: azureml-opendatasets==$(SDK_VERSION) joblib
         displayName: 'Create Datastore' 
 
-# - job: register_dataset
-#   displayName: 'Register Dataset'
-#   dependsOn: register_datastore
-#   variables: 
-#     datastore: $[ dependencies.data_snapshot.outputs['datavars.datastore'] ]
-#     datapath: $[ dependencies.data_snapshot.outputs['datavars.datapath'] ]
-#   steps:
+- job: register_dataset
+  displayName: 'Register Dataset'
+  dependsOn: register_datastore
+  variables: 
+    datastore: ${{parameters.datastoreName}}
+    datapath: ${{parameters.datasetDataPath}}
+  steps:
 
-#   - template: utils/run-aml-python-code.template.yml
-#     parameters:
-#       serviceConnection: ${{parameters.serviceConnection}}
-#       resourceGroup: ${{parameters.resourceGroup}}
-#       amlWorkspace: ${{parameters.amlWorkspace}}
-#       scriptPath: operation/execution/register_dataset.py
-#       scriptArguments: --name $(AML_DATASET) --datastore $(DATASTORE) --path $(DATAPATH)
+  - template: utils/run-aml-python-code.template.yml
+    parameters:
+      serviceConnection: ${{parameters.serviceConnection}}
+      resourceGroup: ${{parameters.resourceGroup}}
+      amlWorkspace: ${{parameters.amlWorkspace}}
+      scriptPath: operation/execution/register_dataset.py
+      scriptArguments: --name $(AML_DATASET) --datastore $(DATASTORE) --path $(DATAPATH)
